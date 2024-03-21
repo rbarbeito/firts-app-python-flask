@@ -10,11 +10,14 @@ fake= Faker()
 def index():
 
     cursos = [fake.first_name() for _ in range(10)]
+    # cursos =[]
+    
 
     data = {
-        "titulo": "Index",
+        "titulo": "Mis Cursos",
         "mensaje": "Saludos",
-        "cursos": cursos
+        "cursos": cursos,
+        "cantidad_cursos": len(cursos)
     }
 
     return render_template('index.html', data=data)
