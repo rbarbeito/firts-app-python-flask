@@ -1,9 +1,17 @@
+<<<<<<< HEAD
 from flask import Flask, render_template, request
+=======
+from flask import Flask, render_template
+>>>>>>> 634a536af60625eba1647cc19d90bd571436c3d3
 from faker import Faker
 
 app = Flask(__name__)
 
+<<<<<<< HEAD
 fake = Faker()
+=======
+fake= Faker()
+>>>>>>> 634a536af60625eba1647cc19d90bd571436c3d3
 
 
 @app.route('/')
@@ -11,6 +19,10 @@ def index():
 
     cursos = [fake.first_name() for _ in range(10)]
     # cursos =[]
+<<<<<<< HEAD
+=======
+    
+>>>>>>> 634a536af60625eba1647cc19d90bd571436c3d3
 
     data = {
         "titulo": "Mis Cursos",
@@ -22,6 +34,7 @@ def index():
     return render_template('index.html', data=data)
 
 
+<<<<<<< HEAD
 @app.route('/contacto/<nombre>/<edad>')
 def contacto(nombre, edad):
 
@@ -48,4 +61,7 @@ if __name__ == '__main__':
 
     app.add_url_rule('/query_string', view_func=query_string)
 
+=======
+if __name__ == '__main__':
+>>>>>>> 634a536af60625eba1647cc19d90bd571436c3d3
     app.run(debug=True, port=8080)
