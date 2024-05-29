@@ -1,9 +1,33 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, jsonify
 from faker import Faker
+
+from flask_mysqldb import MySQL
 
 app = Flask(__name__)
 
 fake = Faker()
+
+# Cnexion a Base de Datos
+app.config['MYSQL_HOST']='localhost'
+app.config['MYSQL_USER']='root'
+app.config['MYSQL_PASSWORD']='M@ripos4'
+app.config['MYSQL_DB']='empresa'
+
+cnx = MySQL(app)
+
+
+# contruyendo un middleware
+@app.before_request
+def before_request():
+    print("Ejecutando antes de la request")
+
+
+@app.after_request
+def after_request(response):
+    print("Ejecutando despues de la peticion")
+
+    return response
+
 
 
 @app.route('/')
@@ -45,23 +69,33 @@ def query_string():
     return "ok"
 
 
+
+@app.route('/basedatos')
+def base_datos():
+    data={}
+
+    try:
+        cursor=cnx.connection.cursor()
+
+        sql='Select * from departamentos'
+        cursor.execute(sql)
+        res= cursor.fetchall()
+
+        print(res)
+
+        data['oficinas'] = res
+        data['mensaje'] = 'Exito'
+
+    except Exception as e:
+        data['mensaje']='Error'
+
+    return jsonify(data)
+
 def page_not_found(error):
     # return render_template('404.html'), 404
     return redirect(url_for('index')) # haciendo redirect
 
 
-
-# contruyendo un middleware
-@app.before_request
-def before_request():
-    print("Ejecutando antes de la request")
-
-
-@app.after_request
-def after_request(response):
-    print("Ejecutando despues de la peticion")
-
-    return response
 
 
 
